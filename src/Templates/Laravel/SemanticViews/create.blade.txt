@@ -21,7 +21,7 @@
             <div class="column">
                 <div class="raw-margin-top-24">
                     {!! Form::open(['route' => '_sectionPrefix__lower_casePlural_.store', 'class' => 'ui form']) !!}
-                        @form_maker_table("_lower_casePlural_", FormMaker::getTableColumns("_sectionTablePrefix__lower_casePlural_"), '', '_sectionPrefix__lower_casePlural_.form')
+                        @form_maker_table("_lower_casePlural_", LForm::getTableColumns("_sectionTablePrefix__lower_casePlural_"), '', '_sectionPrefix__lower_casePlural_.form')
                         <div class="field">
                             <div class="raw-margin-top-24">
                                 {!! Form::submit('Save', ['class' => 'ui button primary right floated']) !!}

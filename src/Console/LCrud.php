@@ -5,6 +5,7 @@ namespace Luissobrinho\LCrud\Console;
 use Config;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Container\EntryNotFoundException;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 use Luissobrinho\LCrud\Services\AppService;
 use Luissobrinho\LCrud\Services\ConfigService;
@@ -138,6 +139,7 @@ class LCrud extends Command
      * Generate a CRUD stack.
      *
      * @return mixed
+     * @throws EntryNotFoundException
      */
     public function handle()
     {
@@ -215,7 +217,6 @@ class LCrud extends Command
                 '_path_facade_' => $moduleDirectory.'/Facades',
                 '_path_service_' => $moduleDirectory.'/Services',
                 '_path_model_' => $moduleDirectory.'/Models',
-                '_path_model_' => $moduleDirectory.'/Models',
                 '_path_controller_' => $moduleDirectory.'/Controllers',
                 '_path_views_' => $moduleDirectory.'/Views',
                 '_path_tests_' => $moduleDirectory.'/Tests',
@@ -259,10 +260,11 @@ class LCrud extends Command
     /**
      * Create a CRUD.
      *
-     * @param array  $config
+     * @param array $config
      * @param string $section
      * @param string $table
-     * @param array  $splitTable
+     * @param array $splitTable
+     * @throws Exception
      */
     public function createCRUD($config, $section, $table, $splitTable)
     {

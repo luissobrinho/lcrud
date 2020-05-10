@@ -14,7 +14,8 @@
     ],
     "require": {
         "php": ">=7.3",
-        "doctrine/dbal": "^2.10"
+        "doctrine/dbal": "^2.10",
+        "luissobrinho/lform": "dev-develop"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
