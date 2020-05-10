@@ -2,7 +2,7 @@
 
 namespace Luissobrinho\LCrud;
 
-use Luissobrinho\FormMaker\FormMakerProvider;
+use Luissobrinho\LForm\LFormProvider;
 use Illuminate\Support\ServiceProvider;
 
 class LCrudProvider extends ServiceProvider
@@ -34,7 +34,7 @@ class LCrudProvider extends ServiceProvider
         */
 
         if (class_exists('Illuminate\Foundation\AliasLoader')) {
-            $this->app->register(FormMakerProvider::class);
+            $this->app->register(LFormProvider::class);
         }
 
         /*
