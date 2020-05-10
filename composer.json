@@ -1,0 +1,47 @@
+{
+    "name": "luissobrinho/lcrud",
+    "description": "An incredibly powerful and some say magical CRUD maker for Laravel",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/luissobrinho/lcrud/issues",
+        "source": "https://github.com/luissobrinho/lcrud"
+    },
+    "authors": [
+        {
+            "name": "Luis Eduardo Altino",
+            "email": "ads.luis.sobrinho@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "doctrine/dbal": "^2.10"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0",
+        "mockery/mockery": "^0.9.4",
+        "mikey179/vfsStream": "^1.6",
+        "orchestra/testbench": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Luissobrinho\\LCrud\\": "src/"
+        },
+        "files": [
+            "src/Helpers/namespace.php"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Luissobrinho\\LCrud\\LCrudProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
