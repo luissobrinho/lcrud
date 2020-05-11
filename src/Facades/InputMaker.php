@@ -1,6 +1,6 @@
 <?php
 
-namespace Luissobrinho\LForm\Facades;
+namespace Luissobrinho\LCrud\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

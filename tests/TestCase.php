@@ -20,7 +20,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Luissobrinho\LForm\LFormProvider::class,
+            \Luissobrinho\LCrud\LFormProvider::class,
         ];
     }
 
@@ -29,8 +29,8 @@ class TestCase extends Orchestra\Testbench\TestCase
         return [
             'Form' => \Collective\Html\FormFacade::class,
             'HTML' => \Collective\Html\HtmlFacade::class,
-            'LForm' => \Luissobrinho\LForm\Facades\LForm::class,
-            'InputMaker' => \Luissobrinho\LForm\Facades\InputMaker::class,
+            'LForm' => \Luissobrinho\LCrud\Facades\LForm::class,
+            'InputMaker' => \Luissobrinho\LCrud\Facades\InputMaker::class,
         ];
     }
 

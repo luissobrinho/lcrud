@@ -80,8 +80,8 @@ class LFormProvider extends ServiceProvider
 
         $loader = AliasLoader::getInstance();
 
-        $loader->alias('LForm', \Luissobrinho\LForm\Facades\LForm::class);
-        $loader->alias('InputMaker', \Luissobrinho\LForm\Facades\InputMaker::class);
+        $loader->alias('LForm', \Luissobrinho\LCrud\Facades\LForm::class);
+        $loader->alias('InputMaker', \Luissobrinho\LCrud\Facades\InputMaker::class);
 
         // Thrid party
         $loader->alias('Form', \Collective\Html\FormFacade::class);

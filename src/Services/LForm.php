@@ -1,6 +1,6 @@
 <?php
 
-namespace Luissobrinho\LForm\Services;
+namespace Luissobrinho\LCrud\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;

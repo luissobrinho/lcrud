@@ -1,6 +1,6 @@
 <?php
 
-namespace Luissobrinho\LForm\Services;
+namespace Luissobrinho\LCrud\Services;
 
 /**
  * Input Calibration.

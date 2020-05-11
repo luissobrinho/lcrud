@@ -1,6 +1,6 @@
 <?php
 
-namespace Luissobrinho\LForm\Generators;
+namespace Luissobrinho\LCrud\Generators;
 
 use Luissobrinho\LCrud\Services\InputCalibrator;
 
