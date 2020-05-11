@@ -2,7 +2,7 @@
 
 namespace Luissobrinho\LCrud\Services;
 
-use Luissobrinho\LCrud\Services\TableService;
+use Illuminate\Support\Str;
 
 class ModelService
 {
@@ -30,10 +30,10 @@ class ModelService
                 $relation[2] = strtolower(end($relationEnd));
             }
 
-            $method = str_singular($relation[2]);
+            $method = Str::singular($relation[2]);
 
             if (stristr($relation[0], 'many')) {
-                $method = str_plural($relation[2]);
+                $method = Str::plural($relation[2]);
             }
 
             $relationshipMethods .= "\n\tpublic function ".$method.'() {';
@@ -55,7 +55,7 @@ class ModelService
     public function configTheModel($config, $model)
     {
         if (!empty($config['schema'])) {
-            $model = str_replace('// _camel_case_ table data', $this->tableService->prepareTableDefinition($config['schema']), $model);
+            $model = str_replace('// _Str::camel_ table data', $this->tableService->prepareTableDefinition($config['schema']), $model);
         }
 
         if (!empty($config['relationships'])) {
@@ -65,7 +65,7 @@ class ModelService
                 $relationships[] = explode('|', $relationshipExpression);
             }
 
-            $model = str_replace('// _camel_case_ relationships', $this->prepareModelRelationships($relationships), $model);
+            $model = str_replace('// _Str::camel_ relationships', $this->prepareModelRelationships($relationships), $model);
         }
 
         return $model;

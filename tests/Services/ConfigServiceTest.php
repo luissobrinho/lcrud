@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Services\ConfigService;
 
@@ -43,9 +44,9 @@ class ConfigServiceTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
             '_lower_case_'               => strtolower('testTable'),
-            '_lower_casePlural_'         => str_plural(strtolower('testTable')),
-            '_camel_case_'               => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_'         => str_plural(camel_case('testTable')),
+            '_lower_casePlural_'         => Str::plural(strtolower('testTable')),
+            '_Str::camel_'               => ucfirst(Str::camel('testTable')),
+            '_Str::camelPlural_'         => Str::plural(Str::camel('testTable')),
         ];
 
         $this->sectionedConfig = [

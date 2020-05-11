@@ -2,6 +2,7 @@
 
 namespace Luissobrinho\LCrud\Generators;
 
+use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Services\InputCalibrator;
 
 /**
@@ -102,8 +103,8 @@ class HtmlGenerator
      */
     public function makeCheckbox($config, $selected, $custom)
     {
-        if (str_contains($config['class'], 'form-control')) {
-            if (str_contains($config['class'], 'form-check-inline')) {
+        if (Str::contains($config['class'], 'form-control')) {
+            if (Str::contains($config['class'], 'form-check-inline')) {
                 $config['class'] = str_replace('form-control', '', $config['class']);
             } else {
                 $config['class'] = str_replace('form-control', 'form-check-input', $config['class']);
@@ -136,12 +137,13 @@ class HtmlGenerator
     /**
      * Make a relationship input.
      *
-     * @param array  $config
+     * @param array $config
      * @param string $label
      * @param string $value
      * @param mixed $custom
      *
      * @return string
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function makeRelationship($config, $label = 'name', $value = 'id', $custom = '')
     {

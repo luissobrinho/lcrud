@@ -5,6 +5,7 @@ namespace Luissobrinho\LCrud\Console;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Services\TableService;
 
 class TableLCrud extends Command
@@ -33,7 +34,6 @@ class TableLCrud extends Command
     /**
      * Generate a CRUD stack.
      *
-     * @return mixed
      * @throws Exception
      */
     public function handle()
@@ -60,7 +60,7 @@ class TableLCrud extends Command
 
         // Format the table name accordingly
         // usecase: OrderProducts turns into order_products
-        $table_name = str_plural(strtolower(snake_case($table)));
+        $table_name = Str::plural(strtolower(Str::snake($table)));
 
         $migrationName = 'create_'.$table_name.'_table';
         $migrationFiles = $filesystem->allFiles(base_path('database/migrations'));

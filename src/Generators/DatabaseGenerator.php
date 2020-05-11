@@ -5,6 +5,7 @@ namespace Luissobrinho\LCrud\Generators;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Console\LCrud;
 use Luissobrinho\LCrud\Services\FileService;
 use Luissobrinho\LCrud\Traits\SchemaTrait;
@@ -41,11 +42,11 @@ class DatabaseGenerator
     {
         try {
             if (!empty($section)) {
-                $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
-                $tableName = str_plural(strtolower(implode('_', $splitTable)));
+                $migrationName = 'create_'.Str::plural(strtolower(implode('_', $splitTable))).'_table';
+                $tableName = Str::plural(strtolower(implode('_', $splitTable)));
             } else {
-                $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
-                $tableName = str_plural(strtolower(snake_case($table)));
+                $migrationName = 'create_'.Str::plural(strtolower(Str::snake($table))).'_table';
+                $tableName = Str::plural(strtolower(Str::snake($table)));
             }
 
             $command->callSilent('make:migration', [
@@ -78,9 +79,9 @@ class DatabaseGenerator
         $migrationFiles = $this->filesystem->allFiles($this->getMigrationsPath($config));
 
         if (!empty($section)) {
-            $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
+            $migrationName = 'create_'.Str::plural(strtolower(implode('_', $splitTable))).'_table';
         } else {
-            $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
+            $migrationName = 'create_'.Str::plural(strtolower(Str::snake($table))).'_table';
         }
 
         $parsedTable = '';
@@ -161,6 +162,8 @@ class DatabaseGenerator
 
             return $columnDetailString;
         }
+
+        return  'default';
     }
 
     /**

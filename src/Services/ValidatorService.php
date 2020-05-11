@@ -3,6 +3,8 @@
 namespace Luissobrinho\LCrud\Services;
 
 use Exception;
+use Illuminate\Support\Str;
+use Luissobrinho\LCrud\Console\LCrud;
 use Luissobrinho\LCrud\Traits\SchemaTrait;
 
 /**
@@ -17,9 +19,10 @@ class ValidatorService
     /**
      * Validate the Schema.
      *
-     * @param \Luissobrinho\LCrud\Console\LCrud $command
+     * @param LCrud $command
      *
      * @return bool|Exception
+     * @throws Exception
      */
     public function validateSchema($command)
     {
@@ -36,7 +39,7 @@ class ValidatorService
 
                 preg_match('('.self::VALID_COLUMN_NAME_REGEX.')', $columnDetails[0], $columnDetailsType);
 
-                if (!in_array(camel_case($columnDetailsType[0]), $command->columnTypes)) {
+                if (!in_array(Str::camel($columnDetailsType[0]), $command->columnTypes)) {
                     throw new Exception($columnDetailsType[0].' is not in the array of valid column types: '.implode(', ', $command->columnTypes), 1);
                 }
             }
@@ -48,9 +51,10 @@ class ValidatorService
     /**
      * Validate the options.
      *
-     * @param \Luissobrinho\LCrud\Console\LCrud $command
+     * @param LCrud $command
      *
      * @return bool|Exception
+     * @throws Exception
      */
     public function validateOptions($command)
     {

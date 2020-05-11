@@ -3,6 +3,7 @@
 namespace Luissobrinho\LCrud\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 
 class Publish extends Command
@@ -37,7 +38,7 @@ class Publish extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -51,7 +52,7 @@ class Publish extends Command
      * @param $directory
      * @param $destination
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      *
      * @return bool|int
      */
@@ -71,6 +72,7 @@ class Publish extends Command
 
     /**
      *  Publish config files for Lumen.
+     * @throws FileNotFoundException
      */
     private function publishConfig()
     {
@@ -84,6 +86,7 @@ class Publish extends Command
 
     /**
      *  Publish templates files for Lumen.
+     * @throws FileNotFoundException
      */
     private function publishTemplates()
     {

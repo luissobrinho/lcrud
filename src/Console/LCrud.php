@@ -6,6 +6,7 @@ use Config;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Container\EntryNotFoundException;
+use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 use Luissobrinho\LCrud\Services\AppService;
 use Luissobrinho\LCrud\Services\ConfigService;
@@ -139,7 +140,7 @@ class LCrud extends Command
      * Generate a CRUD stack.
      *
      * @return mixed
-     * @throws EntryNotFoundException
+     * @throws Exception
      */
     public function handle()
     {
@@ -155,7 +156,7 @@ class LCrud extends Command
             $framework = ucfirst('lumen');
         }
 
-        $table = ucfirst(str_singular($this->argument('table')));
+        $table = ucfirst(Str::singular($this->argument('table')));
 
         $this->validator->validateSchema($this);
         $this->validator->validateOptions($this);
@@ -174,7 +175,7 @@ class LCrud extends Command
         ];
 
         if ($this->option('asPackage')) {
-            $newPath = base_path($this->option('asPackage').'/'.str_plural($table));
+            $newPath = base_path($this->option('asPackage').'/'.Str::plural($table));
             if (!is_dir($newPath)) {
                 mkdir($newPath, 755, true);
             }
@@ -206,12 +207,12 @@ class LCrud extends Command
             $section = $splitTable[0];
             $config = $this->configService->configASectionedCRUD($config, $section, $table, $splitTable);
         } else {
-            $config = array_merge($config, app('config')->get('lcrud.single', []));
+            $config = array_merge($config, config('lcrud.single', []));
             $config = $this->configService->setConfig($config, $section, $table);
         }
 
         if ($this->option('asPackage')) {
-            $moduleDirectory = base_path($this->option('asPackage').'/'.str_plural($table));
+            $moduleDirectory = base_path($this->option('asPackage').'/'.Str::plural($table));
             $config = array_merge($config, [
                 '_path_package_' => $moduleDirectory,
                 '_path_facade_' => $moduleDirectory.'/Facades',
@@ -222,12 +223,12 @@ class LCrud extends Command
                 '_path_tests_' => $moduleDirectory.'/Tests',
                 '_path_request_' => $moduleDirectory.'/Requests',
                 '_path_routes_' => $moduleDirectory.'/Routes/web.php',
-                '_namespace_services_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Services',
-                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Facades',
-                '_namespace_model_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Models',
-                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Controllers',
-                '_namespace_request_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Requests',
-                '_namespace_package_' => $appNamespace.'\\'.ucfirst(str_plural($table)),
+                '_namespace_services_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Services',
+                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Facades',
+                '_namespace_model_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Models',
+                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Controllers',
+                '_namespace_request_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Requests',
+                '_namespace_package_' => $appNamespace.'\\'.ucfirst(Str::plural($table)),
             ]);
 
             if (! is_dir($moduleDirectory.'/Routes')) {

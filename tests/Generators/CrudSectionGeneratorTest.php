@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 
@@ -42,10 +43,10 @@ class CrudSectionGeneratorTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Superman\Api',
             '_namespace_request_' => 'App\Http\Requests\Superman',
             '_lower_case_' => strtolower('testTable'),
-            '_lower_casePlural_' => str_plural(strtolower('testTable')),
-            '_camel_case_' => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_' => str_plural(camel_case('testTable')),
-            '_ucCamel_casePlural_' => ucfirst(str_plural(camel_case('testTable'))),
+            '_lower_casePlural_' => Str::plural(strtolower('testTable')),
+            '_Str::camel_' => ucfirst(Str::camel('testTable')),
+            '_Str::camelPlural_' => Str::plural(Str::camel('testTable')),
+            '_ucCamel_casePlural_' => ucfirst(Str::plural(Str::camel('testTable'))),
             '_table_name_' => 'superman_testtable',
         ];
     }
