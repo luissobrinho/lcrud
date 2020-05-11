@@ -53,14 +53,6 @@ The API option will add in a controller to handle API requests and responses. It
 yourapp.com/api/v1/books
 ```
 
-## UI
-There is only one supported CSS framework (Bootstrap). Without the UI option specified the LCrud will use the plain HTML view which isn't very nice looking.
-
-Both expect a dashboard parent view, this can be generated with the following commands:
-```
-artisan luissobrinho:build bootstrap
-```
-
 These re-skin your views with either of the CSS frameworks.
 
 ## Service Only
