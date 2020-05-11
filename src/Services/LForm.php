@@ -52,6 +52,7 @@ class LForm
      * Set the form maker connection.
      *
      * @param string $connection
+     * @return LForm
      */
     public function setConnection($connection)
     {
@@ -64,6 +65,7 @@ class LForm
      * Set the columns of the form
      *
      * @param int $columns
+     * @return LForm
      */
     public function setColumns($columns)
     {

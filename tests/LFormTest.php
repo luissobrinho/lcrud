@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Luissobrinho\LForm\Services\LForm;
+use Luissobrinho\LCrud\Services\LForm;
 
 class Entry extends Model
 {

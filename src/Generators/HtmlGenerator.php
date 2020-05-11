@@ -2,7 +2,7 @@
 
 namespace Luissobrinho\LForm\Generators;
 
-use Luissobrinho\LForm\Services\InputCalibrator;
+use Luissobrinho\LCrud\Services\InputCalibrator;
 
 /**
  * Generate the CRUD.

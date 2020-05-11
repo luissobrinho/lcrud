@@ -5,7 +5,7 @@ namespace Luissobrinho\LForm\Services;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Luissobrinho\LForm\Generators\HtmlGenerator;
+use Luissobrinho\LCrud\Generators\HtmlGenerator;
 
 /**
  * $this->elper to make an HTML input.

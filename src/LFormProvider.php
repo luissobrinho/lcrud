@@ -1,12 +1,12 @@
 <?php
 
-namespace Luissobrinho\LForm;
+namespace Luissobrinho\LCrud;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Luissobrinho\LForm\Services\LForm;
-use Luissobrinho\LForm\Services\InputMaker;
+use Luissobrinho\LCrud\Services\LForm;
+use Luissobrinho\LCrud\Services\InputMaker;
 
 class LFormProvider extends ServiceProvider
 {

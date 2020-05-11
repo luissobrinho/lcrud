@@ -2,7 +2,7 @@
 
 use Illuminate\Container\Container as Container;
 use Illuminate\Support\Facades\Facade as Facade;
-use Luissobrinho\LForm\Generators\HtmlGenerator;
+use Luissobrinho\LCrud\Generators\HtmlGenerator;
 
 class HtmlGeneratorTest extends TestCase
 {
