@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+
 class TestCase extends Orchestra\Testbench\TestCase
 {
     protected $app;
@@ -18,26 +20,31 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Luissobrinho\LCrud\LCrudProvider::class,
+            \Luissobrinho\LForm\LFormProvider::class,
         ];
     }
 
     protected function getPackageAliases($app)
     {
-        return [];
+        return [
+            'Form' => \Collective\Html\FormFacade::class,
+            'HTML' => \Collective\Html\HtmlFacade::class,
+            'LForm' => \Luissobrinho\LForm\Facades\LForm::class,
+            'InputMaker' => \Luissobrinho\LForm\Facades\InputMaker::class,
+        ];
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->withFactories(__DIR__.'/../src/Models/Factories');
+
+        $destinationDir = realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel/database/migrations');
+        File::copyDirectory(realpath(__DIR__.'/migrations'), $destinationDir);
+
         $this->artisan('migrate', [
             '--database' => 'testbench',
         ]);
-        $this->artisan('vendor:publish', [
-            '--provider' => 'Luissobrinho\LCrud\LCrudProvider',
-            '--force' => true,
-        ]);
+
         $this->withoutMiddleware();
         $this->withoutEvents();
     }
