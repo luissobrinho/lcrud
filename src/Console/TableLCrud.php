@@ -3,14 +3,12 @@
 namespace Luissobrinho\LCrud\Console;
 
 use Exception;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Luissobrinho\LCrud\Services\TableService;
 
 class TableLCrud extends Command
 {
-    use DetectsApplicationNamespace;
 
     /**
      * The console command name.
