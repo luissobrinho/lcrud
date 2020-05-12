@@ -106,7 +106,7 @@ class CrudGenerator
             $model = str_replace($key, $value, $model);
         }
 
-        $model = $this->putIfNotExists($config['_path_model_'].'/'.$config['_Str::camel_'].'.php', $model);
+        $model = $this->putIfNotExists($config['_path_model_'].'/'.$config['_camel_case_'].'.php', $model);
 
         return $model;
     }
@@ -130,8 +130,8 @@ class CrudGenerator
             $updateRequest = str_replace($key, $value, $updateRequest);
         }
 
-        $createRequest = $this->putIfNotExists($config['_path_request_'].'/'.$config['_Str::camel_'].'CreateRequest.php', $createRequest);
-        $updateRequest = $this->putIfNotExists($config['_path_request_'].'/'.$config['_Str::camel_'].'UpdateRequest.php', $updateRequest);
+        $createRequest = $this->putIfNotExists($config['_path_request_'].'/'.$config['_camel_case_'].'CreateRequest.php', $createRequest);
+        $updateRequest = $this->putIfNotExists($config['_path_request_'].'/'.$config['_camel_case_'].'UpdateRequest.php', $updateRequest);
 
         return $createRequest;
     }
@@ -161,7 +161,7 @@ class CrudGenerator
             }
         }
 
-        $service = $this->putIfNotExists($config['_path_service_'].'/'.$config['_Str::camel_'].'Service.php', $service);
+        $service = $this->putIfNotExists($config['_path_service_'].'/'.$config['_camel_case_'].'Service.php', $service);
 
         if ($config['options-withBaseService'] ?? false) {
             $this->putIfNotExists($config['_path_service_'].'/BaseService.php', $baseService);
@@ -243,7 +243,7 @@ class CrudGenerator
             $facade = str_replace($key, $value, $facade);
         }
 
-        $facade = $this->putIfNotExists($config['_path_facade_'].'/'.$config['_Str::camel_'].'.php', $facade);
+        $facade = $this->putIfNotExists($config['_path_facade_'].'/'.$config['_camel_case_'].'.php', $facade);
 
         return $facade;
     }
@@ -263,7 +263,7 @@ class CrudGenerator
             $provider = str_replace($key, $value, $provider);
         }
 
-        $provider = $this->putIfNotExists($config['_path_package_'].'/'.$config['_Str::camel_'].'ServiceProvider.php', $provider);
+        $provider = $this->putIfNotExists($config['_path_package_'].'/'.$config['_camel_case_'].'ServiceProvider.php', $provider);
 
         return $provider;
     }
@@ -286,7 +286,7 @@ class CrudGenerator
 
         foreach ($filteredTestTemplates as $testTemplate) {
             $test = $this->fileService->get($testTemplate->getRealPath());
-            $testName = $config['_Str::camel_'].$testTemplate->getBasename('.'.$testTemplate->getExtension());
+            $testName = $config['_camel_case_'].$testTemplate->getBasename('.'.$testTemplate->getExtension());
             $testDirectory = $config['_path_tests_'].'/'.$testTemplate->getRelativePath();
 
             $this->fileService->mkdir($testDirectory, 0777, true);

@@ -2,8 +2,10 @@
 
 namespace Luissobrinho\LCrud\Services;
 
+use Luissobrinho\LCrud\Console\LCrud;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 use Luissobrinho\LCrud\Generators\DatabaseGenerator;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class CrudService
 {
@@ -21,8 +23,8 @@ class CrudService
     /**
      * Generate core elements.
      *
-     * @param array                                         $config
-     * @param \Symfony\Component\Console\Helper\ProgressBar $bar
+     * @param array $config
+     * @param ProgressBar $bar
      */
     public function generateCore($config, $bar)
     {
@@ -39,8 +41,8 @@ class CrudService
     /**
      * Generate app based elements.
      *
-     * @param array                                         $config
-     * @param \Symfony\Component\Console\Helper\ProgressBar $bar
+     * @param array $config
+     * @param ProgressBar $bar
      */
     public function generateAppBased($config, $bar)
     {
@@ -59,11 +61,11 @@ class CrudService
     /**
      * Generate db elements.
      *
-     * @param \Symfony\Component\Console\Helper\ProgressBar $bar
+     * @param ProgressBar $bar
      * @param string                                        $section
      * @param string                                        $table
      * @param array                                         $splitTable
-     * @param \Luissobrinho\LCrud\Console\LCrud              $command
+     * @param LCrud              $command
      */
     public function generateDB($config, $bar, $section, $table, $splitTable, $command)
     {
@@ -92,7 +94,7 @@ class CrudService
      * Generate api elements.
      *
      * @param array                                         $config
-     * @param \Symfony\Component\Console\Helper\ProgressBar $bar
+     * @param ProgressBar $bar
      */
     public function generateAPI($config, $bar)
     {

@@ -44,8 +44,8 @@ class CrudSectionGeneratorTest extends TestCase
             '_namespace_request_' => 'App\Http\Requests\Superman',
             '_lower_case_' => strtolower('testTable'),
             '_lower_casePlural_' => Str::plural(strtolower('testTable')),
-            '_Str::camel_' => ucfirst(Str::camel('testTable')),
-            '_Str::camelPlural_' => Str::plural(Str::camel('testTable')),
+            '_camel_case_' => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_' => Str::plural(Str::camel('testTable')),
             '_ucCamel_casePlural_' => ucfirst(Str::plural(Str::camel('testTable'))),
             '_table_name_' => 'superman_testtable',
         ];
