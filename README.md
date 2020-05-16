@@ -86,6 +86,7 @@ You can define the table schema with the structure below. The field types should
 
 The following column types are available:
 
+* id
 * bigIncrements
 * increments
 * bigInteger
