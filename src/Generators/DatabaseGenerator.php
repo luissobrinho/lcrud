@@ -79,9 +79,9 @@ class DatabaseGenerator
         $migrationFiles = $this->filesystem->allFiles($this->getMigrationsPath($config));
 
         if (!empty($section)) {
-            $migrationName = 'create_'.Str::plural(strtolower(implode('_', $splitTable))).'_table';
+            $migrationName = 'create_'.Str::plural(Str::lower(implode('_', $splitTable))).'_table';
         } else {
-            $migrationName = 'create_'.Str::plural(strtolower(Str::snake($table))).'_table';
+            $migrationName = 'create_'.Str::plural(Str::lower(Str::snake($table))).'_table';
         }
 
         $parsedTable = '';
@@ -116,7 +116,7 @@ class DatabaseGenerator
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
                 $migrationData = $this->filesystem->get($file->getPathname());
-                $migrationData = str_replace("\$table->increments('id');", $parsedTable, $migrationData);
+                $migrationData = Str::of($migrationData)->replace("\$table->increments('id');", $parsedTable);
                 $this->filesystem->put($file->getPathname(), $migrationData);
             }
         }
@@ -199,7 +199,7 @@ class DatabaseGenerator
         $this->fileService->mkdir($config['_path_migrations_'], 0777, true);
 
         if ($relative) {
-            return str_replace(base_path(), '', $config['_path_migrations_']);
+            return Str::of( $config['_path_migrations_'])->replace(base_path(), '');
         }
 
         return $config['_path_migrations_'];

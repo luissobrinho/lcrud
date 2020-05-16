@@ -2,6 +2,7 @@
 
 namespace Luissobrinho\LCrud\Services;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Luissobrinho\LCrud\Console\LCrud;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 use Luissobrinho\LCrud\Generators\DatabaseGenerator;
@@ -12,6 +13,11 @@ class CrudService
     protected $crudGenerator;
     protected $dbGenerator;
 
+    /**
+     * CrudService constructor.
+     * @param CrudGenerator $crudGenerator
+     * @param DatabaseGenerator $dbGenerator
+     */
     public function __construct(
         CrudGenerator $crudGenerator,
         DatabaseGenerator $dbGenerator
@@ -61,11 +67,14 @@ class CrudService
     /**
      * Generate db elements.
      *
+     * @param $config
      * @param ProgressBar $bar
-     * @param string                                        $section
-     * @param string                                        $table
-     * @param array                                         $splitTable
-     * @param LCrud              $command
+     * @param string $section
+     * @param string $table
+     * @param array $splitTable
+     * @param LCrud $command
+     * @throws FileNotFoundException
+     * @throws \Exception
      */
     public function generateDB($config, $bar, $section, $table, $splitTable, $command)
     {

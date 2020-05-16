@@ -1,8 +1,8 @@
-<?php
+<?php /** @noinspection PhpHierarchyChecksInspection */
 
 use Luissobrinho\LCrud\Generators\DatabaseGenerator;
 
-class DatabaseGeneratorTest extends TestCase
+class DatabaseGeneratorTest extends \Tests\TestCase
 {
     protected $generator;
     protected $config;
@@ -98,6 +98,9 @@ class DatabaseGeneratorTest extends TestCase
         return $migrations;
     }
 
+    /**
+     *
+     */
     public function tearDown()
     {
         parent::tearDown();

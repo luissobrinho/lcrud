@@ -1,9 +1,12 @@
 <?php
+namespace Tests;
 
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\File;
 
-class TestCase extends Orchestra\Testbench\TestCase
+class TestCase extends BaseTestCase
 {
+    use CreatesApplication;
     protected $app;
 
     protected function getEnvironmentSetUp($app)
@@ -32,20 +35,5 @@ class TestCase extends Orchestra\Testbench\TestCase
             'LForm' => \Luissobrinho\LCrud\Facades\LForm::class,
             'InputMaker' => \Luissobrinho\LCrud\Facades\InputMaker::class,
         ];
-    }
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $destinationDir = realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel/database/migrations');
-        File::copyDirectory(realpath(__DIR__.'/migrations'), $destinationDir);
-
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-        ]);
-
-        $this->withoutMiddleware();
-        $this->withoutEvents();
     }
 }

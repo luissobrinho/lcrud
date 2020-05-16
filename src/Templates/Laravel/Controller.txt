@@ -5,13 +5,17 @@ namespace _namespace_controller_;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use _app_namespace_Http\Controllers\Controller;
 use _namespace_services_\_camel_case_Service;
 use _namespace_request_\_camel_case_CreateRequest;
 use _namespace_request_\_camel_case_UpdateRequest;
 
 class _ucCamel_casePlural_Controller extends Controller
 {
+    /**
+     * @var _camel_case_Service
+     */
+    private $service;
+
     public function __construct(_camel_case_Service $_lower_case__service)
     {
         $this->service = $_lower_case__service;
@@ -53,7 +57,7 @@ class _ucCamel_casePlural_Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  _namespace_request_\_camel_case_CreateRequest  $request
+     * @param  _camel_case_CreateRequest  $request
      * @return RedirectResponse
      */
     public function store(_camel_case_CreateRequest $request)
@@ -94,7 +98,7 @@ class _ucCamel_casePlural_Controller extends Controller
     /**
      * Update the _lower_casePlural_ in storage.
      *
-     * @param  _namespace_request_\_camel_case_UpdateRequest  $request
+     * @param  _camel_case_UpdateRequest  $request
      * @param  int  $id
      * @return RedirectResponse
      */
