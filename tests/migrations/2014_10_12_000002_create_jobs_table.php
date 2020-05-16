@@ -13,14 +13,14 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->default(0);
             $table->string('name');
             $table->nullableTimestamps();
         });
 
         Schema::create('ideas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->nullableTimestamps();
         });

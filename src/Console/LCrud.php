@@ -21,6 +21,7 @@ class LCrud extends Command
      * @var array
      */
     public $columnTypes = [
+        'id',
         'bigIncrements',
         'increments',
         'bigInteger',

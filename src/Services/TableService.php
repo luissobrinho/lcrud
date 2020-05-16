@@ -86,6 +86,7 @@ class TableService
         $faker = Faker::create();
 
         $typeArray = [
+            'id' => 1,
             'bigIncrements' => 1,
             'increments' => 1,
             'string' => $faker->word,
