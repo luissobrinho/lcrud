@@ -3,6 +3,7 @@
 namespace _namespace_controller_;
 
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use _app_namespace_Http\Controllers\Controller;
 use _namespace_services_\_camel_case_Service;
@@ -60,7 +61,7 @@ class _ucCamel_casePlural_Controller extends Controller
         $result = $this->service->create($request->except('_token'));
 
         if ($result) {
-            return redirect(route('_sectionRoutePrefix__lower_casePlural_.edit', ['id' => $result->__get('id')]))->with('message', 'Successfully created');
+            return redirect(route('_sectionRoutePrefix__lower_casePlural_.edit', ['id' => $result->getAttribute('id')]))->with('message', 'Successfully created');
         }
 
         return redirect(route('_sectionRoutePrefix__lower_casePlural_.index'))->withErrors('Failed to create');
