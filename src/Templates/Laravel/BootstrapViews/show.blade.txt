@@ -1,4 +1,6 @@
-@extends('dashboard', ['pageTitle' => '_ucCamel_casePlural_ &raquo; Show'])
+@extends('dashboard')
+
+@section('pageTitle') _ucCamel_casePlural_ &raquo; Show @stop
 
 @section('content')
 
