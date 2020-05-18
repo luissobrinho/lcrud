@@ -6,6 +6,7 @@ use Config;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Container\EntryNotFoundException;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 use Luissobrinho\LCrud\Services\AppService;
@@ -140,7 +141,7 @@ class LCrud extends Command
     /**
      * Generate a CRUD stack.
      *
-     * @return mixed
+     * @return void
      * @throws Exception
      */
     public function handle()
@@ -175,7 +176,7 @@ class LCrud extends Command
             'relationships' => $this->option('relationships'),
         ];
 
-        if ($this->option('asPackage')) {
+        if ($this->hasOption('asPackage')) {
             $newPath = base_path($this->option('asPackage').'/'.Str::plural($table));
             if (!is_dir($newPath)) {
                 mkdir($newPath, 755, true);
@@ -194,7 +195,7 @@ class LCrud extends Command
             $options
         );
 
-        if ($this->option('ui')) {
+        if ($this->hasOption('ui')) {
             $config[$this->option('ui')] = true;
         }
 
@@ -212,7 +213,7 @@ class LCrud extends Command
             $config = $this->configService->setConfig($config, $section, $table);
         }
 
-        if ($this->option('asPackage')) {
+        if ($this->hasOption('asPackage')) {
             $moduleDirectory = base_path($this->option('asPackage').'/'.Str::plural($table));
             $config = array_merge($config, [
                 '_path_package_' => $moduleDirectory,
@@ -239,10 +240,23 @@ class LCrud extends Command
 
         $this->createCRUD($config, $section, $table, $splitTable);
 
-        if ($this->option('asPackage')) {
+        if ($this->hasOption('asPackage')) {
             $this->createPackageServiceProvider($config);
             $this->crudService->correctViewNamespace($config);
         }
+
+        if ($this->hasOption('migration')) {
+            $result = $this->confirm('Do you want to run the php artisan migrate command?');
+
+            if ($result) {
+                Artisan::call('migrate');
+            }
+        }
+
+        $this->info("\nAdd this HTML to the file resources/views/dashboard/panel.blade.php: \n");
+        $this->comment("<li class=\"nav-item @if(Request::is('" . Str::plural($table) . "', '" . Str::plural($table) . "/*')) active @endif\">");
+        $this->comment("<a class=\"nav-link\" href=\"{!! url('{". Str::plural($table) ."}}') !!}\"><span class=\"fas fa-item\"></span> " . Str::plural($table) . "</a>");
+        $this->comment("</li> \n\n");
 
         $this->info("\nYou may wish to add this as your testing database:\n");
         $this->comment("'testing' => [ 'driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '' ],");
@@ -311,30 +325,30 @@ class LCrud extends Command
         $this->line('Built request...');
         $this->line('Built service...');
 
-        if (!$this->option('serviceOnly') && !$this->option('apiOnly')) {
+        if (!$this->hasOption('serviceOnly') && !$this->hasOption('apiOnly')) {
             $this->line('Built controller...');
-            if (!$this->option('withoutViews')) {
+            if (!$this->hasOption('withoutViews')) {
                 $this->line('Built views...');
             }
             $this->line('Built routes...');
         }
 
-        if ($this->option('withFacade')) {
+        if ($this->hasOption('withFacade')) {
             $this->line('Built facade...');
         }
 
         $this->line('Built tests...');
         $this->line('Built factory...');
 
-        if ($this->option('api') || $this->option('apiOnly')) {
+        if ($this->hasOption('api') || $this->hasOption('apiOnly')) {
             $this->line('Built api...');
             $this->comment("\nAdd the following to your app/Providers/RouteServiceProvider.php: \n");
             $this->info("require base_path('routes/api.php'); \n");
         }
 
-        if ($this->option('migration')) {
+        if ($this->hasOption('migration')) {
             $this->line('Built migration...');
-            if ($this->option('schema')) {
+            if ($this->hasOption('schema')) {
                 $this->line('Built schema...');
             }
         } else {
