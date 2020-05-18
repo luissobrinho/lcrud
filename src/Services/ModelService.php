@@ -55,7 +55,7 @@ class ModelService
     public function configTheModel($config, $model)
     {
         if (!empty($config['schema'])) {
-            $model = str_replace('// _Str::camel_ table data', $this->tableService->prepareTableDefinition($config['schema']), $model);
+            $model = str_replace('// _camel_case_ table data', $this->tableService->prepareTableDefinition($config['schema']), $model);
         }
 
         if (!empty($config['relationships'])) {
@@ -65,7 +65,7 @@ class ModelService
                 $relationships[] = explode('|', $relationshipExpression);
             }
 
-            $model = str_replace('// _Str::camel_ relationships', $this->prepareModelRelationships($relationships), $model);
+            $model = str_replace('// _camel_case_ relationships', $this->prepareModelRelationships($relationships), $model);
         }
 
         return $model;
