@@ -176,7 +176,7 @@ class LCrud extends Command
             'relationships' => $this->option('relationships'),
         ];
 
-        if ($this->hasOption('asPackage')) {
+        if ($this->option('asPackage')) {
             $newPath = base_path($this->option('asPackage').'/'.Str::plural($table));
             if (!is_dir($newPath)) {
                 mkdir($newPath, 755, true);
@@ -195,7 +195,7 @@ class LCrud extends Command
             $options
         );
 
-        if ($this->hasOption('ui')) {
+        if ($this->option('ui')) {
             $config[$this->option('ui')] = true;
         }
 
@@ -213,7 +213,7 @@ class LCrud extends Command
             $config = $this->configService->setConfig($config, $section, $table);
         }
 
-        if ($this->hasOption('asPackage')) {
+        if ($this->option('asPackage')) {
             $moduleDirectory = base_path($this->option('asPackage').'/'.Str::plural($table));
             $config = array_merge($config, [
                 '_path_package_' => $moduleDirectory,
@@ -240,12 +240,12 @@ class LCrud extends Command
 
         $this->createCRUD($config, $section, $table, $splitTable);
 
-        if ($this->hasOption('asPackage')) {
+        if ($this->option('asPackage')) {
             $this->createPackageServiceProvider($config);
             $this->crudService->correctViewNamespace($config);
         }
 
-        if ($this->hasOption('migration')) {
+        if ($this->option('migration')) {
             $result = $this->confirm('Do you want to run the php artisan migrate command?');
 
             if ($result) {
@@ -255,7 +255,7 @@ class LCrud extends Command
 
         $this->info("\nAdd this HTML to the file resources/views/dashboard/panel.blade.php: \n");
         $this->comment("<li class=\"nav-item @if(Request::is('" . Str::lower(Str::plural($table)) . "', '" . Str::lower(Str::plural($table)) . "/*')) active @endif\">");
-        $this->comment("<a class=\"nav-link\" href=\"{!! url('{". Str::lower(Str::plural($table)) ."}}') !!}\"><span class=\"fas fa-item\"></span> " . Str::lower(Str::plural($table)) . "</a>");
+        $this->comment("<a class=\"nav-link\" href=\"{!! url('". Str::lower(Str::plural($table)) ."') !!}\"><span class=\"fas fa-item\"></span> " . Str::plural($table) . "</a>");
         $this->comment("</li> \n\n");
 
         $this->info("\nYou may wish to add this as your testing database:\n");
@@ -325,30 +325,30 @@ class LCrud extends Command
         $this->line('Built request...');
         $this->line('Built service...');
 
-        if (!$this->hasOption('serviceOnly') && !$this->hasOption('apiOnly')) {
+        if (!$this->option('serviceOnly') && !$this->option('apiOnly')) {
             $this->line('Built controller...');
-            if (!$this->hasOption('withoutViews')) {
+            if (!$this->option('withoutViews')) {
                 $this->line('Built views...');
             }
             $this->line('Built routes...');
         }
 
-        if ($this->hasOption('withFacade')) {
+        if ($this->option('withFacade')) {
             $this->line('Built facade...');
         }
 
         $this->line('Built tests...');
         $this->line('Built factory...');
 
-        if ($this->hasOption('api') || $this->hasOption('apiOnly')) {
+        if ($this->option('api') || $this->option('apiOnly')) {
             $this->line('Built api...');
             $this->comment("\nAdd the following to your app/Providers/RouteServiceProvider.php: \n");
             $this->info("require base_path('routes/api.php'); \n");
         }
 
-        if ($this->hasOption('migration')) {
+        if ($this->option('migration')) {
             $this->line('Built migration...');
-            if ($this->hasOption('schema')) {
+            if ($this->option('schema')) {
                 $this->line('Built schema...');
             }
         } else {
