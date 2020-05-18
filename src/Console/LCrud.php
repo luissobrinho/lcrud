@@ -254,8 +254,8 @@ class LCrud extends Command
         }
 
         $this->info("\nAdd this HTML to the file resources/views/dashboard/panel.blade.php: \n");
-        $this->comment("<li class=\"nav-item @if(Request::is('" . Str::plural($table) . "', '" . Str::plural($table) . "/*')) active @endif\">");
-        $this->comment("<a class=\"nav-link\" href=\"{!! url('{". Str::plural($table) ."}}') !!}\"><span class=\"fas fa-item\"></span> " . Str::plural($table) . "</a>");
+        $this->comment("<li class=\"nav-item @if(Request::is('" . Str::lower(Str::plural($table)) . "', '" . Str::lower(Str::plural($table)) . "/*')) active @endif\">");
+        $this->comment("<a class=\"nav-link\" href=\"{!! url('{". Str::lower(Str::plural($table)) ."}}') !!}\"><span class=\"fas fa-item\"></span> " . Str::lower(Str::plural($table)) . "</a>");
         $this->comment("</li> \n\n");
 
         $this->info("\nYou may wish to add this as your testing database:\n");
