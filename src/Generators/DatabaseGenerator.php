@@ -163,7 +163,7 @@ class DatabaseGenerator
             return $columnDetailString;
         }
 
-        return  'default';
+        return  $columnDetailString;
     }
 
     /**
