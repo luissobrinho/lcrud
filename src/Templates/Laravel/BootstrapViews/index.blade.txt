@@ -22,7 +22,9 @@
         <div class="row">
             <div class="col-md-12">
                 @if ($_lower_casePlural_->isEmpty())
-                <span class="well text-center">No _camel_casePlural_ found.</div>
+                <div class="col-md-12 text-center">
+                    <span>No _camel_casePlural_ found.</div>
+                </div>
             @else
             <table class="table table-striped">
                 <thead>
