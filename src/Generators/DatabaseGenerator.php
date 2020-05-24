@@ -113,6 +113,8 @@ class DatabaseGenerator
             }
         }
 
+        $parsedTable .= "\t\t\t\$table->softDeletes();\n";
+
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
                 $migrationData = $this->filesystem->get($file->getPathname());

@@ -260,6 +260,313 @@ php artisan lcrud:table {name or snake_names}
 {--relationships}
 ```
 
+# LForm
+
+**LForm** - A remarkably magical form and input maker tool for Laravel.
+
+The LForm package provides a set of tools for generating HTML forms with as little as 1 line of code. Don't want to write boring HTML, neither do we. The LForm will generate error containers, all fields defined by either the table or object column types, or if you prefer to have more control define a config.
+
+Time to publish those assets!
+```
+php artisan vendor:publish --provider="Luisobrinho\LForm\LFormProvider"
+```
+
+----
+
+# LForm Guide
+
+## Blade Directives
+
+```php
+@form_maker_table();
+@form_maker_object();
+@form_maker_array();
+@form_maker_columns();
+```
+
+## Helpers
+
+```php
+form_maker_table();
+form_maker_object();
+form_maker_array();
+form_maker_columns();
+```
+
+## Facades
+
+```php
+LForm::fromTable();
+LForm::fromObject();
+LForm::fromArray();
+LForm::getTableColumns();
+```
+
+## Common Components
+
+## Simple Fields
+
+These components are the most simplistic:
+
+```
+class: 'a css class'
+reformatted: true|false // Reformats the column name to remove underscores etc
+populated: true|false // Fills in the form with values
+idAndTimestamps: true|false // ignores the id and timestamp columns
+```
+
+### Columns
+
+Columns is an array of the following nature which can be used in place of the columns component in any of the fromX methods:
+
+```php
+[
+    'id' => [
+        'type' => 'hidden',
+    ],
+    'name' => [
+        'type' => '', // defaults to standard text input
+        'placeholder' => 'User Name Goes Here!',
+        'alt_name' => 'User Name',
+        'custom' => 'custom DOM attributes etc',
+        'class' => 'css class names',
+        'before' => '<span class="input-group-addon" id="basic-addon1">@</span>',
+        'after' => '<span class="input-group-addon" id="basic-addon2">@example.com</span>',
+    ],
+    'job' => [
+        'type' => 'select',
+        'alt_name' => 'Your Job',
+        'custom' => 'multiple', // custom attributes like multiple, disabled etc
+        'options' => [
+            'key 1' => 'value_1',
+            'key 2' => 'value_2',
+        ]
+    ],
+    'roles' => [
+        'type' => 'relationship',
+        'class' => 'App\Repositories\Roles\Roles',
+        'label' => 'name' // the field for the label in the select input generated
+    ]
+]
+```
+
+Types supported in the Column Config:
+
+* text (converts to textarea)
+* password
+* checkbox
+* checkbox-inline
+* radio
+* select
+* hidden
+* number
+* float
+* decimal
+
+_** If no type is set the LForm will default to a standard text input_
+
+Columns with the following names will not be displayed by default: id, created_at, updated_at. You would need to override this setting in the creation of the form.
+
+### View
+
+You can create a custom view that the LForm will use: This is an example:
+
+```blade
+<div class="row">
+    <div class="form-group {{ $errorHighlight }}">
+        <label class="control-label" for="{!! $labelFor !!}">{!! $label !!}</label>
+        <div class="row">
+            {!! $input !!}
+        </div>
+    </div>
+    {!! $errorMessage !!}
+</div>
+```
+
+## fromTable()
+
+```
+LForm::fromTable($table, $columns = null, $class = 'form-control', $view = null, $reformatted = true, $populated = false, $idAndTimestamps = false)
+```
+
+### Example:
+
+```
+LForm::fromTable('users')
+```
+
+The fromTable method will crawl the specified table and build the form out of the columns and types of coloumns. You can freely customize it (see below) the basic above example will result in:
+
+```haml
+<div class="form-group ">
+    <label class="control-label" for="Name">Name</label>
+    <input  id="Name" class="form-control" type="" name="name" placeholder="Name">
+</div>
+<div class="form-group ">
+    <label class="control-label" for="Email">Email</label>
+    <input  id="Email" class="form-control" type="" name="email" placeholder="Email">
+</div>
+<div class="form-group ">
+    <label class="control-label" for="Password">Password</label>
+    <input  id="Password" class="form-control" type="" name="password" placeholder="Password">
+</div>
+<div class="form-group ">
+    <label class="control-label" for="Remember_token">Remember Token</label>
+    <input  id="Remember_token" class="form-control" type="" name="remember_token" placeholder="Remember Token">
+</div>
+```
+
+## fromObject()
+
+Within the same rules as above we can rather than provide a table string we can insert an object such as `Auth::user()` or any single object retrieved from the database.
+
+```
+fromObject($object, $columns = null, $view = null, $class = 'form-control', $populated = true, $reformatted = false, $idAndTimestamps = false)
+```
+
+## fromArray()
+
+From array works in the same context as fromTable, and fromObject, we're able to in this case provide a simple array list of properties. The key difference with fromArray is that we can provide these in one of two formats:
+
+```php
+[ 'name', 'birthday' ]
+```
+
+OR
+
+```php
+[ 'name' => 'string', 'birthday' => 'date' ]
+```
+
+The full list of field types compatible are:
+
+* integer
+* string
+* datetime
+* date
+* float
+* binary
+* blob
+* boolean
+* datetimetz
+* time
+* array
+* json_array
+* object
+* decimal
+* bigint
+* smallint
+
+```blade
+fromArray($array, $columns = null, $view = null, $class = 'form-control', $populated = true, $reformatted = false, $idAndTimestamps = false)
+```
+
+## getTableColumns()
+
+The getTableColumns method utilizes Doctrines Dbal component to map your database table and provide the columns and types. This is perfect initial builds of an editor form off an object.
+
+Example:
+
+```blade
+LForm::fromObject(Books::find(1), LForm::getFromColumns('books'))
+```
+
+This will build the form off the columns of the table. Though the fromObject will scan through the object, but providing the table columns as the columns input allows the inputs to be set to thier correct type.
+```
+
+----
+
+# InputMaker Guide
+
+The nice part about the input maker is that its the core of the form maker only pulled out. So this way you can reduce your HTML writing significanly with its blade directives or helpers.
+
+## Blade Directives
+
+```blade
+@input_maker_label()
+@input_maker_create()
+```
+
+## Helpers
+
+```
+input_maker_label();
+input_maker_create();
+```
+
+## Facades
+
+```php
+InputMaker::label();
+InputMaker::create();
+```
+
+## Common Components
+
+## Simple Fields For Everything!
+
+The label generator is the easiest:
+
+```
+input_maker_label('name', ['class' => 'something'])
+```
+
+The input generator has a few more parts:
+
+```
+input_maker_create($name, $field, $object = null, $class = 'form-control', $reformatted = false, $populated = true)
+```
+
+The $field paramter is an array which can be highly configured.
+
+### Example $feild Config
+
+```php
+[
+    'type' => '', // defaults to standard text input
+    'placeholder' => 'User Name Goes Here!',
+    'alt_name' => 'User Name',
+    'custom' => 'custom DOM attributes etc',
+    'class' => 'css class names',
+    'before' => '<span class="input-group-addon" id="basic-addon1">@</span>',
+    'after' => '<span class="input-group-addon" id="basic-addon2">@example.com</span>',
+]
+```
+
+For Relationships:
+```blade
+[
+    'model' => 'Full class as string',
+    'label' => 'visible name for the options',
+    'value' => 'value for the options',
+]
+
+// Example without User:
+@input_maker_create('roles', ['type' => 'relationship', 'model' => 'App\Repositories\Role\Role', 'label' => 'label', 'value' => 'name'])
+
+// Example with User:
+@input_maker_create('roles', ['type' => 'relationship', 'model' => 'App\Repositories\Role\Role', 'label' => 'label', 'value' => 'name'], $user)
+```
+
+Types supported in the Config:
+
+* string
+* text (converts to textarea)
+* password
+* checkbox
+* checkbox-inline
+* radio
+* select
+* hidden
+* number
+* float
+* decimal
+* relationship
+
+_** If no type is set the InputMaker will default to a standard text input_
+
+----
+
 ## License
 LCrud is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 

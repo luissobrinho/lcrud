@@ -378,8 +378,6 @@ class LForm
         }
 
         switch ($columns) {
-            case 1:
-                return implode("", $formBuild);
             case 2:
                 return $this->buildBootstrapColumnForm($formBuild, 2);
             case 3:
@@ -388,6 +386,7 @@ class LForm
                 return $this->buildBootstrapColumnForm($formBuild, 4);
             case 6:
                 return $this->buildBootstrapColumnForm($formBuild, 6);
+            case 1:
             default:
                 return implode("", $formBuild);
         }
@@ -430,7 +429,7 @@ class LForm
         if (!$message) {
             $realErrorMessage = '';
         } else {
-            $realErrorMessage = '<div><p class="text-danger">'.$message[0].'</p></div>';
+            $realErrorMessage = "<div><p class='text-danger'>$message[0]</p></div>";
         }
 
         return $realErrorMessage;
@@ -458,6 +457,7 @@ class LForm
      *
      * @param string $table Table name
      *
+     * @param bool $allColumns
      * @return array
      */
     public function getTableColumns($table, $allColumns = false)
