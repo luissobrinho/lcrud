@@ -1,8 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Services\ConfigService;
+
 
 class ConfigServiceTest extends TestCase
 {
@@ -10,7 +12,7 @@ class ConfigServiceTest extends TestCase
     protected $config;
     protected $app;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->service = app(ConfigService::class);

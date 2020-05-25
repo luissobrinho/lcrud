@@ -1,12 +1,7 @@
 <?php
-namespace Tests;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\File;
-
-class TestCase extends BaseTestCase
+class TestCase extends Orchestra\Testbench\TestCase
 {
-    use CreatesApplication;
     protected $app;
 
     protected function getEnvironmentSetUp($app)
@@ -23,17 +18,27 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Luissobrinho\LCrud\LFormProvider::class,
+            \Luissobrinho\LCrud\LCrudProvider::class,
         ];
     }
 
     protected function getPackageAliases($app)
     {
-        return [
-            'Form' => \Collective\Html\FormFacade::class,
-            'HTML' => \Collective\Html\HtmlFacade::class,
-            'LForm' => \Luissobrinho\LCrud\Facades\LForm::class,
-            'InputMaker' => \Luissobrinho\LCrud\Facades\InputMaker::class,
-        ];
+        return [];
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withFactories(__DIR__.'/../src/Models/Factories');
+        $this->artisan('migrate', [
+            '--database' => 'testbench',
+        ]);
+        $this->artisan('vendor:publish', [
+            '--provider' => 'Luissobrinho\LCrud\LCrudProvider',
+            '--force' => true,
+        ]);
+        $this->withoutMiddleware();
+        $this->withoutEvents();
     }
 }

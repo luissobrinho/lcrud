@@ -1,17 +1,10 @@
 <?php
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Services\CrudService;
-
-class MockProgressBar
-{
-    public function advance()
-    {
-        return true;
-    }
-}
 
 class CrudServiceTest extends TestCase
 {
@@ -23,15 +16,15 @@ class CrudServiceTest extends TestCase
     /**
      *
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->command = Mockery::mock(Command::class);
+        $this->command = \Mockery::mock(Command::class);
         $this->command->shouldReceive('callSilent')->andReturnUsing(function ($command, $data) {
             Artisan::call($command, $data);
         });
-        $this->bar = Mockery::mock('MockProgressBar')
+        $this->bar = \Mockery::mock('MockProgressBar')
             ->shouldReceive('advance')
             ->andReturn(true)
             ->getMock();

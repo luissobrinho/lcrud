@@ -8,7 +8,7 @@ class TestServiceTest extends TestCase
     protected $service;
     protected $filesystem;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->service = app(TestService::class);

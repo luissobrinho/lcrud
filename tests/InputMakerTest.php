@@ -1,63 +1,17 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Luissobrinho\LCrud\Services\InputMaker;
-
-class User extends Model
-{
-    public $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    public function jobs()
-    {
-        return $this->hasOne('Job');
-    }
-
-    public function ideas()
-    {
-        return $this->belongsToMany('Idea');
-    }
-}
-
-class Idea extends Model
-{
-    public $fillable = [
-        'name',
-    ];
-
-    public function user()
-    {
-        return $this->hasOne('User');
-    }
-}
-
-class Job extends Model
-{
-    public $fillable = [
-        'name',
-        'user_id',
-    ];
-
-    public function user()
-    {
-        return $this->hasOne('User');
-    }
-
-    public function custom($params)
-    {
-        return $this->where('name', 'LIKE', "%$params[0]%")->get();
-    }
-}
+use Models\Entry;
+use Models\Job;
+use Models\User;
+use Models\Idea;
 
 class InputMakerTest extends TestCase
 {
     protected $app;
     protected $inputMaker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

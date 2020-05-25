@@ -1,38 +1,14 @@
 <?php
-namespace  Tests;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Luissobrinho\LCrud\Services\LForm;
-
-class Entry extends Model
-{
-    use SoftDeletes;
-
-    public $fillable = [
-        'name',
-        'details',
-    ];
-
-    public function getMetaAttribute()
-    {
-        return (object) [
-            'user' => (object) [
-                'id' => 1,
-            ],
-            'created_at' => \Carbon\Carbon::create(1999, 1, 1, 6, 15, 0),
-            'updated_at' => \Carbon\Carbon::create(1999, 1, 1, 6, 15, 0),
-            'deleted_at' => null
-        ];
-    }
-}
+use Models\Entry;
 
 class LFormTest extends TestCase
 {
     protected $app;
     protected $formMaker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->formMaker = new LForm();

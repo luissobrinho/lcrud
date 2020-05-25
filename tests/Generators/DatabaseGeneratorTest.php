@@ -2,7 +2,7 @@
 
 use Luissobrinho\LCrud\Generators\DatabaseGenerator;
 
-class DatabaseGeneratorTest extends \Tests\TestCase
+class DatabaseGeneratorTest extends TestCase
 {
     protected $generator;
     protected $config;

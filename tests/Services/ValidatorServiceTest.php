@@ -10,11 +10,11 @@ class ValidatorServiceTest extends TestCase
     protected $validator;
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->command = Mockery::mock('Luissobrinho\LCrud\Console\LCrud');
+        $this->command = \Mockery::mock('Luissobrinho\LCrud\Console\LCrud');
         $this->validator = new ValidatorService();
         $this->config = [
             'bootstrap' => false,

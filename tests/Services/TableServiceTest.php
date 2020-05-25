@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Services\TableService;
 
@@ -8,7 +9,7 @@ class TableServiceTest extends TestCase
     protected $service;
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->service = new TableService();
         $this->config = [
