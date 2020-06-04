@@ -2,8 +2,8 @@
 
 **LCrud** - An incredibly powerful and some say magical CRUD maker for Laravel
 
-[![Build Status](https://travis-ci.org/LuissobrinhoInc/lcrud.svg?branch=master)](https://travis-ci.org/LuissobrinhoInc/lcrud)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6398c82f417803d3fe6e/maintainability)](https://codeclimate.com/github/LuissobrinhoInc/lcrud/maintainability)
+[![Latest Version](https://img.shields.io/packagist/v/luissobrinho/lcrud.svg)](https://packagist.org/packages/luissobrinho/lcrud)
+[![Build Status](https://travis-ci.org/LuissobrinhoInc/lcrud.svg?branch=develop)](https://travis-ci.org/LuissobrinhoInc/lcrud)
 [![Packagist](https://img.shields.io/packagist/dt/luissobrinho/lcrud.svg)](https://packagist.org/packages/luissobrinho/lcrud)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/luissobrinho/lcrud)
 
