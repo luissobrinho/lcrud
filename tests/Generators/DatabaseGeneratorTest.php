@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpHierarchyChecksInspection */
 
 use Luissobrinho\LCrud\Generators\DatabaseGenerator;
 
@@ -98,6 +98,9 @@ class DatabaseGeneratorTest extends TestCase
         return $migrations;
     }
 
+    /**
+     *
+     */
     public function tearDown()
     {
         parent::tearDown();

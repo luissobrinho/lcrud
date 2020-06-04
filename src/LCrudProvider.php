@@ -2,7 +2,7 @@
 
 namespace Luissobrinho\LCrud;
 
-use Luissobrinho\LForm\LFormProvider;
+use Luissobrinho\LCrud\LFormProvider;
 use Illuminate\Support\ServiceProvider;
 
 class LCrudProvider extends ServiceProvider

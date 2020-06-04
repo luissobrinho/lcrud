@@ -6,6 +6,8 @@ use Config;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Container\EntryNotFoundException;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Generators\CrudGenerator;
 use Luissobrinho\LCrud\Services\AppService;
 use Luissobrinho\LCrud\Services\ConfigService;
@@ -20,6 +22,7 @@ class LCrud extends Command
      * @var array
      */
     public $columnTypes = [
+        'id',
         'bigIncrements',
         'increments',
         'bigInteger',
@@ -138,8 +141,8 @@ class LCrud extends Command
     /**
      * Generate a CRUD stack.
      *
-     * @return mixed
-     * @throws EntryNotFoundException
+     * @return void
+     * @throws Exception
      */
     public function handle()
     {
@@ -155,7 +158,7 @@ class LCrud extends Command
             $framework = ucfirst('lumen');
         }
 
-        $table = ucfirst(str_singular($this->argument('table')));
+        $table = ucfirst(Str::singular($this->argument('table')));
 
         $this->validator->validateSchema($this);
         $this->validator->validateOptions($this);
@@ -174,7 +177,7 @@ class LCrud extends Command
         ];
 
         if ($this->option('asPackage')) {
-            $newPath = base_path($this->option('asPackage').'/'.str_plural($table));
+            $newPath = base_path($this->option('asPackage').'/'.Str::plural($table));
             if (!is_dir($newPath)) {
                 mkdir($newPath, 755, true);
             }
@@ -206,12 +209,12 @@ class LCrud extends Command
             $section = $splitTable[0];
             $config = $this->configService->configASectionedCRUD($config, $section, $table, $splitTable);
         } else {
-            $config = array_merge($config, app('config')->get('lcrud.single', []));
+            $config = array_merge($config, config('lcrud.single', []));
             $config = $this->configService->setConfig($config, $section, $table);
         }
 
         if ($this->option('asPackage')) {
-            $moduleDirectory = base_path($this->option('asPackage').'/'.str_plural($table));
+            $moduleDirectory = base_path($this->option('asPackage').'/'.Str::plural($table));
             $config = array_merge($config, [
                 '_path_package_' => $moduleDirectory,
                 '_path_facade_' => $moduleDirectory.'/Facades',
@@ -222,12 +225,12 @@ class LCrud extends Command
                 '_path_tests_' => $moduleDirectory.'/Tests',
                 '_path_request_' => $moduleDirectory.'/Requests',
                 '_path_routes_' => $moduleDirectory.'/Routes/web.php',
-                '_namespace_services_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Services',
-                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Facades',
-                '_namespace_model_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Models',
-                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Controllers',
-                '_namespace_request_' => $appNamespace.'\\'.ucfirst(str_plural($table)).'\Requests',
-                '_namespace_package_' => $appNamespace.'\\'.ucfirst(str_plural($table)),
+                '_namespace_services_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Services',
+                '_namespace_facade_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Facades',
+                '_namespace_model_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Models',
+                '_namespace_controller_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Controllers',
+                '_namespace_request_' => $appNamespace.'\\'.ucfirst(Str::plural($table)).'\Requests',
+                '_namespace_package_' => $appNamespace.'\\'.ucfirst(Str::plural($table)),
             ]);
 
             if (! is_dir($moduleDirectory.'/Routes')) {
@@ -241,6 +244,19 @@ class LCrud extends Command
             $this->createPackageServiceProvider($config);
             $this->crudService->correctViewNamespace($config);
         }
+
+        if ($this->option('migration')) {
+            $result = $this->confirm('Do you want to run the php artisan migrate command?');
+
+            if ($result) {
+                Artisan::call('migrate');
+            }
+        }
+
+        $this->info("\nAdd this HTML to the file resources/views/dashboard/panel.blade.php: \n");
+        $this->comment("<li class=\"nav-item @if(Request::is('" . Str::lower(Str::plural($table)) . "', '" . Str::lower(Str::plural($table)) . "/*')) active @endif\">");
+        $this->comment("<a class=\"nav-link\" href=\"{!! url('". Str::lower(Str::plural($table)) ."') !!}\"><span class=\"fas fa-item\"></span> " . Str::plural($table) . "</a>");
+        $this->comment("</li> \n\n");
 
         $this->info("\nYou may wish to add this as your testing database:\n");
         $this->comment("'testing' => [ 'driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '' ],");

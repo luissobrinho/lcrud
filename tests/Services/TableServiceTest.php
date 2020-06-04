@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Services\TableService;
 
@@ -8,7 +9,7 @@ class TableServiceTest extends TestCase
     protected $service;
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->service = new TableService();
         $this->config = [
@@ -37,9 +38,9 @@ class TableServiceTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_' => 'App\Http\Requests',
             '_lower_case_' => strtolower('testTable'),
-            '_lower_casePlural_' => str_plural(strtolower('testTable')),
-            '_camel_case_' => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_' => str_plural(camel_case('testTable')),
+            '_lower_casePlural_' => Str::plural(strtolower('testTable')),
+            '_camel_case_' => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_' => Str::plural(Str::camel('testTable')),
             'template_source' => __DIR__.'/../src/Templates/Laravel',
         ];
     }

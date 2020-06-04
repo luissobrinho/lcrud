@@ -2,6 +2,8 @@
 
 namespace Luissobrinho\LCrud\Services;
 
+use Illuminate\Support\Str;
+
 class ConfigService
 {
     /**
@@ -55,7 +57,7 @@ class ConfigService
             '_path_routes_'              => $basePath.'/routes/web.php',
             '_path_api_routes_'          => $basePath.'/routes/api.php',
             '_path_migrations_'          => $basePath.'/database/migrations',
-            '_path_factory_'             => $basePath.'/database/factories/'.snake_case($table).'Factory.php',
+            '_path_factory_'             => $basePath.'/database/factories/'.Str::snake($table).'Factory.php',
             'routes_prefix'              => '',
             'routes_suffix'              => '',
             '_app_namespace_'            => 'App\\',
@@ -65,16 +67,16 @@ class ConfigService
             '_namespace_controller_'     => $appNamespace.'Http\Controllers',
             '_namespace_api_controller_' => $appNamespace.'Http\Controllers\Api',
             '_namespace_request_'        => $appNamespace.'Http\Requests',
-            '_table_name_'               => str_plural(strtolower(snake_case($table))),
-            '_lower_case_'               => strtolower(snake_case($table)),
-            '_lower_casePlural_'         => str_plural(strtolower(snake_case($table))),
-            '_camel_case_'               => ucfirst(camel_case($table)),
-            '_camel_casePlural_'         => str_plural(camel_case($table)),
-            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case($table))),
-            '_plain_space_textLower_'    => strtolower(str_replace('_', ' ', snake_case($table))),
-            '_plain_space_textFirst_'    => ucfirst(strtolower(str_replace('_', ' ', snake_case($table)))),
-            '_snake_case_'               => snake_case($table),
-            '_snake_casePlural_'         => str_plural(snake_case($table)),
+            '_table_name_'               => Str::plural(strtolower(Str::snake($table))),
+            '_lower_case_'               => strtolower(Str::snake($table)),
+            '_lower_casePlural_'         => Str::plural(strtolower(Str::snake($table))),
+            '_camel_case_'               => ucfirst(Str::camel($table)),
+            '_camel_casePlural_'         => Str::plural(Str::camel($table)),
+            '_ucCamel_casePlural_'       => ucfirst(Str::plural(Str::camel($table))),
+            '_plain_space_textLower_'    => strtolower(str_replace('_', ' ', Str::snake($table))),
+            '_plain_space_textFirst_'    => ucfirst(strtolower(str_replace('_', ' ', Str::snake($table)))),
+            '_snake_case_'               => Str::snake($table),
+            '_snake_casePlural_'         => Str::plural(Str::snake($table)),
             'options-api'                => $options['api'],
             'options-apiOnly'            => $options['apiOnly'],
             'options-ui'                 => $options['ui'],
@@ -121,7 +123,7 @@ class ConfigService
             '_path_routes_'              => $appPath.'/Http/routes.php',
             '_path_api_routes_'          => $appPath.'/Http/api-routes.php',
             '_path_migrations_'          => $basePath.'/database/migrations',
-            '_path_factory_'             => $basePath.'/database/factories/'.snake_case($table).'Factory.php',
+            '_path_factory_'             => $basePath.'/database/factories/'.Str::snake($table).'Factory.php',
             'routes_prefix'              => "\n\nRoute::group(['namespace' => '".ucfirst($section)."', 'prefix' => '".strtolower($section)."', 'middleware' => ['web']], function () { \n",
             'routes_suffix'              => "\n});",
             '_app_namespace_'            => $appNamespace,
@@ -132,15 +134,15 @@ class ConfigService
             '_namespace_api_controller_' => $appNamespace.'Http\Controllers\Api\\'.ucfirst($section),
             '_namespace_request_'        => $appNamespace.'Http\Requests\\'.ucfirst($section),
             '_lower_case_'               => strtolower($splitTable[1]),
-            '_lower_casePlural_'         => str_plural(strtolower($splitTable[1])),
-            '_camel_case_'               => ucfirst(camel_case($splitTable[1])),
-            '_camel_casePlural_'         => str_plural(camel_case($splitTable[1])),
-            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case($splitTable[1]))),
-            '_table_name_'               => str_plural(strtolower(implode('_', $splitTable))),
+            '_lower_casePlural_'         => Str::plural(strtolower($splitTable[1])),
+            '_camel_case_'               => ucfirst(Str::camel($splitTable[1])),
+            '_camel_casePlural_'         => Str::plural(Str::camel($splitTable[1])),
+            '_ucCamel_casePlural_'       => ucfirst(Str::plural(Str::camel($splitTable[1]))),
+            '_table_name_'               => Str::plural(strtolower(implode('_', $splitTable))),
         ];
 
         $config = array_merge($config, $sectionalConfig);
-        $config = array_merge($config, app('config')->get('lcrud.sectioned', []));
+        $config = array_merge($config, config('lcrud.sectioned', []));
         $config = $this->setConfig($config, $section, $table);
 
         $pathsToMake = [
@@ -171,7 +173,7 @@ class ConfigService
     {
         $templates = __DIR__.'/../Templates/'.$framework;
 
-        $templates = app('config')->get('lcrud.template_source', $templates);
+        $templates = config('lcrud.template_source', $templates);
 
         return $templates;
     }

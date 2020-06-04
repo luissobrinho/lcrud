@@ -16,35 +16,35 @@ class CrudGenerator
     /**
      * Filesystem instance.
      *
-     * @var \Illuminate\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $filesystem;
 
     /**
      * FileService instance.
      *
-     * @var \Luissobrinho\LCrud\Services\FileService
+     * @var FileService
      */
     protected $fileService;
 
     /**
      * TableService instance.
      *
-     * @var \Luissobrinho\LCrud\Services\TableService
+     * @var TableService
      */
     protected $tableService;
 
     /**
      * TestService instance.
      *
-     * @var \Luissobrinho\LCrud\Services\TestService
+     * @var TestService
      */
     protected $testService;
 
     /**
      * ModelService instance.
      *
-     * @var \Luissobrinho\LCrud\Services\ModelService
+     * @var ModelService
      */
     protected $modelService;
 
@@ -379,10 +379,10 @@ class CrudGenerator
     /**
      * Make a file if it doesnt exist.
      *
-     * @param  string $file
-     * @param  mixed $contents
+     * @param string $file
+     * @param mixed $contents
      *
-     * @return void
+     * @return bool|int|string
      */
     public function putIfNotExists($file, $contents)
     {

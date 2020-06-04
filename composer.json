@@ -15,13 +15,13 @@
     "require": {
         "php": ">=7.3",
         "doctrine/dbal": "^2.10",
-        "luissobrinho/lform": "^1.0"
+        "laravelcollective/html": "^6.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0",
-        "mockery/mockery": "^0.9.4",
-        "orchestra/testbench": "^3.4",
-        "mikey179/vfsstream": "^1.6"
+        "phpunit/phpunit": "^9.1",
+        "mockery/mockery": "^1.3",
+        "mikey179/vfsstream": "^1.6",
+        "orchestra/testbench": "^5.2"
     },
     "autoload": {
         "psr-4": {

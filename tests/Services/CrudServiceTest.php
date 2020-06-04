@@ -1,15 +1,10 @@
 <?php
 
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use org\bovigo\vfs\vfsStream;
 use Luissobrinho\LCrud\Services\CrudService;
-
-class MockProgressBar
-{
-    public function advance()
-    {
-        return true;
-    }
-}
 
 class CrudServiceTest extends TestCase
 {
@@ -18,15 +13,18 @@ class CrudServiceTest extends TestCase
     protected $command;
     protected $bar;
 
-    public function setUp()
+    /**
+     *
+     */
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->command = Mockery::mock(\Illuminate\Console\Command::class);
+        $this->command = \Mockery::mock(Command::class);
         $this->command->shouldReceive('callSilent')->andReturnUsing(function ($command, $data) {
-            \Artisan::call($command, $data);
+            Artisan::call($command, $data);
         });
-        $this->bar = Mockery::mock('MockProgressBar')
+        $this->bar = \Mockery::mock('MockProgressBar')
             ->shouldReceive('advance')
             ->andReturn(true)
             ->getMock();
@@ -57,10 +55,10 @@ class CrudServiceTest extends TestCase
             '_namespace_api_controller_' => 'App\Http\Controllers\Api',
             '_namespace_request_'        => 'App\Http\Requests',
             '_lower_case_'               => strtolower('testTable'),
-            '_lower_casePlural_'         => str_plural(strtolower('testTable')),
-            '_camel_case_'               => ucfirst(camel_case('testTable')),
-            '_camel_casePlural_'         => str_plural(camel_case('testTable')),
-            '_ucCamel_casePlural_'       => ucfirst(str_plural(camel_case('testTable'))),
+            '_lower_casePlural_'         => Str::plural(strtolower('testTable')),
+            '_camel_case_'               => ucfirst(Str::camel('testTable')),
+            '_camel_casePlural_'         => Str::plural(Str::camel('testTable')),
+            '_ucCamel_casePlural_'       => ucfirst(Str::plural(Str::camel('testTable'))),
             'template_source'            => __DIR__.'/../../src/Templates/Laravel',
             'options-serviceOnly'        => false,
             'options-apiOnly'            => false,

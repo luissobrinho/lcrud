@@ -5,6 +5,7 @@ namespace Luissobrinho\LCrud\Generators;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Luissobrinho\LCrud\Console\LCrud;
 use Luissobrinho\LCrud\Services\FileService;
 use Luissobrinho\LCrud\Traits\SchemaTrait;
@@ -41,11 +42,11 @@ class DatabaseGenerator
     {
         try {
             if (!empty($section)) {
-                $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
-                $tableName = str_plural(strtolower(implode('_', $splitTable)));
+                $migrationName = 'create_'.Str::plural(strtolower(implode('_', $splitTable))).'_table';
+                $tableName = Str::plural(strtolower(implode('_', $splitTable)));
             } else {
-                $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
-                $tableName = str_plural(strtolower(snake_case($table)));
+                $migrationName = 'create_'.Str::plural(strtolower(Str::snake($table))).'_table';
+                $tableName = Str::plural(strtolower(Str::snake($table)));
             }
 
             $command->callSilent('make:migration', [
@@ -78,9 +79,9 @@ class DatabaseGenerator
         $migrationFiles = $this->filesystem->allFiles($this->getMigrationsPath($config));
 
         if (!empty($section)) {
-            $migrationName = 'create_'.str_plural(strtolower(implode('_', $splitTable))).'_table';
+            $migrationName = 'create_'.Str::plural(Str::lower(implode('_', $splitTable))).'_table';
         } else {
-            $migrationName = 'create_'.str_plural(strtolower(snake_case($table))).'_table';
+            $migrationName = 'create_'.Str::plural(Str::lower(Str::snake($table))).'_table';
         }
 
         $parsedTable = '';
@@ -112,10 +113,12 @@ class DatabaseGenerator
             }
         }
 
+        $parsedTable .= "\t\t\t\$table->softDeletes();\n";
+
         foreach ($migrationFiles as $file) {
             if (stristr($file->getBasename(), $migrationName)) {
                 $migrationData = $this->filesystem->get($file->getPathname());
-                $migrationData = str_replace("\$table->increments('id');", $parsedTable, $migrationData);
+                $migrationData = Str::of($migrationData)->replace("\$table->id();", $parsedTable);
                 $this->filesystem->put($file->getPathname(), $migrationData);
             }
         }
@@ -161,6 +164,8 @@ class DatabaseGenerator
 
             return $columnDetailString;
         }
+
+        return  $columnDetailString;
     }
 
     /**
@@ -196,7 +201,7 @@ class DatabaseGenerator
         $this->fileService->mkdir($config['_path_migrations_'], 0777, true);
 
         if ($relative) {
-            return str_replace(base_path(), '', $config['_path_migrations_']);
+            return Str::of( $config['_path_migrations_'])->replace(base_path(), '');
         }
 
         return $config['_path_migrations_'];

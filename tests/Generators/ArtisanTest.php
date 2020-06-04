@@ -3,7 +3,7 @@
 
 class ArtisanTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -3,9 +3,12 @@
 namespace _namespace_model_;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class _camel_case_ extends Model
 {
+    use SoftDeletes;
+
     public $table = "_table_name_";
 
     public $primaryKey = "id";
