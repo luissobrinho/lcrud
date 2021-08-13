@@ -183,28 +183,32 @@ class HtmlGenerator
             $config['config']['options'][$item->$label] = $item->$value;
         }
 
-        if (!isset($config['config']['selected'])) {
-            if (!isset($config['config']['multiple'])) {
-                $selected = '';
+        if ($object) {
+            if (!isset($config['config']['selected'])) {
+                if (!isset($config['config']['multiple'])) {
+                    $selected = '';
 
-                if (is_object($object) && method_exists($object, $relationship)) {
-                    if ($object->$relationship()->first()) {
-                        $selected = $object->$relationship()->first()->$value;
+                    if (is_object($object) && method_exists($object, $relationship)) {
+                        if ($object->$relationship()->first()) {
+                            $selected = $object->$relationship()->first()->$value;
+                        }
                     }
-                }
 
-                $relationship = str_replace('_id', '', $relationship);
+                    $relationship = str_replace('_id', '', $relationship);
 
-                if (method_exists($object, $relationship)) {
-                    if ($object->$relationship()->first()) {
-                        $selected = $object->$relationship()->first()->$value;
+                    if (method_exists($object, $relationship)) {
+                        if ($object->$relationship()->first()) {
+                            $selected = $object->$relationship()->first()->$value;
+                        }
                     }
+                } else {
+                    $selected = $class->$method()->pluck($value, $label);
                 }
             } else {
-                $selected = $class->$method()->pluck($value, $label);
+                $selected = $config['config']['selected'];
             }
         } else {
-            $selected = $config['config']['selected'];
+            $selected = $class->$method()->pluck($value, $label);
         }
 
         return $this->makeSelected($config, $selected, $custom);
