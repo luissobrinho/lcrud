@@ -105,7 +105,14 @@ class InputMaker
      */
     public function getObjectValue($object, $name)
     {
-        if (is_object($object) && isset($object->$name) && !method_exists($object, $name)) {
+        if (
+            is_object($object)
+            && isset($object->$name)
+            && (
+                in_array($name, json_decode(json_encode($object), true))
+                || in_array($name, ($object->fillable) ? $object->fillable : [$name])
+            )
+        ) {
             return $object->$name;
         }
 
